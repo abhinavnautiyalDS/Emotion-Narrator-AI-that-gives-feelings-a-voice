@@ -1,0 +1,13 @@
+streamlit
+numpy
+pillow
+opencv-python
+matplotlib
+tensorflow
+torch
+transformers[torch]
+huggingface-hub
+gTTS
+cv2
+dotenv
+
