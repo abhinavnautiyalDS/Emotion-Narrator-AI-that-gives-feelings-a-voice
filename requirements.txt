@@ -1,0 +1,10 @@
+streamlit
+numpy
+Pillow
+opencv-python-headless
+matplotlib
+tensorflow-cpu
+torch
+transformers
+huggingface-hub
+gTTS
