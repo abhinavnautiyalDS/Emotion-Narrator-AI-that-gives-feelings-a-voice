@@ -1,9 +1,9 @@
-  # loads .env into os.environ
+# loads .env into os.environ
 import os
 HF_TOKEN = os.getenv("HF_TOKEN", "")
 HF_REPO_ID = 'abhinav965108/distilgpt2_model'
 HF_SUBFOLDER = 'cpu-sft-distil/cpu-sft-distil'
-KERAS_MODEL_PATH = "emotional_narrator_CNN_part1.keras"
+KERAS_MODEL_PATH = "emotional_narrator_CNN_part1.keras"  # Yeh file GitHub mein honi chahiye
 import streamlit as st
 from PIL import Image
 import base64
@@ -227,18 +227,20 @@ def load_models():
         st.error(f"HF model load error: {e}")
         return None
 
-    # Load Keras CNN model
+    # Load Keras CNN model - YEH IMPORTANT CHANGE HAI
     try:
-        if KERAS_MODEL_PATH and os.path.exists(KERAS_MODEL_PATH):
+        if os.path.exists(KERAS_MODEL_PATH):
             cnn_model = tf.keras.models.load_model(KERAS_MODEL_PATH, compile=False)
             models['cnn_model'] = cnn_model
             ##st.success("CNN model loaded successfully")
         else:
-            st.warning("Keras model path not found, using placeholder")
-            models['cnn_model'] = None
+            # Agar file nahi mili toh simple model bana dete hain
+            st.warning(f"Keras model not found at: {KERAS_MODEL_PATH}")
+            st.warning("Using fallback emotion detection")
+            models['cnn_model'] = "fallback"  # String mark kar dete hain
     except Exception as e:
         st.error(f"CNN model load error: {e}")
-        models['cnn_model'] = None
+        models['cnn_model'] = "fallback"  # String mark kar dete hain
 
     return models
 
@@ -282,6 +284,8 @@ def hour_to_period(h):
     return "night"
 
 def model_uses_efficientnet(model):
+    if isinstance(model, str) and model == "fallback":
+        return False
     try:
         ishape = getattr(model, 'input_shape', None)
         if ishape and len(ishape) == 4:
@@ -301,7 +305,7 @@ def preprocess_for_model(pil_img, model=None):
         return CUSTOM_PREPROCESS(pil_img)
     target_h, target_w, channels = 224, 224, 3
     try:
-        if model is not None and hasattr(model, 'input_shape') and model.input_shape:
+        if model is not None and model != "fallback" and hasattr(model, 'input_shape') and model.input_shape:
             ishape = model.input_shape
             if len(ishape) == 4:
                 target_h = int(ishape[1]) or target_h
@@ -316,7 +320,7 @@ def preprocess_for_model(pil_img, model=None):
     img = img.resize((target_w, target_h), Image.BILINEAR)
     arr = np.array(img).astype('float32')
     try:
-        if model is not None and model_uses_efficientnet(model):
+        if model is not None and model != "fallback" and model_uses_efficientnet(model):
             from tensorflow.keras.applications.efficientnet import preprocess_input as eff_pre
             batch = np.expand_dims(arr, 0) if arr.ndim == 3 else arr
             return eff_pre(batch)
@@ -344,6 +348,32 @@ def detect_face_pil(pil_img):
     return Image.fromarray(cv2.cvtColor(face, cv2.COLOR_BGR2RGB))
 
 def get_cnn_probs(model, img):
+    # YEH FIX HAI - agar model "fallback" hai toh random probabilities return karo
+    if isinstance(model, str) and model == "fallback":
+        # Simple fallback based on image properties
+        img_array = np.array(img.convert('L'))
+        brightness = np.mean(img_array)
+        
+        # Brightness ke basis pe emotion predict karo
+        if brightness > 200:
+            # Very bright - happy/surprise
+            probs = np.array([0.1, 0.0, 0.0, 0.6, 0.1, 0.1, 0.1])
+        elif brightness > 150:
+            # Bright - happy/neutral
+            probs = np.array([0.05, 0.0, 0.0, 0.4, 0.4, 0.05, 0.1])
+        elif brightness > 100:
+            # Medium - neutral
+            probs = np.array([0.1, 0.05, 0.05, 0.2, 0.4, 0.1, 0.1])
+        elif brightness > 50:
+            # Dark - sad/angry
+            probs = np.array([0.3, 0.1, 0.1, 0.05, 0.1, 0.3, 0.05])
+        else:
+            # Very dark - sad/fear
+            probs = np.array([0.2, 0.1, 0.3, 0.0, 0.05, 0.3, 0.05])
+            
+        return probs / probs.sum()
+    
+    # Agar actual model hai toh uska predict use karo
     x = preprocess_for_model(img, model)
     logits = model.predict(x)[0]
     return tf.nn.softmax(logits).numpy()
@@ -493,7 +523,10 @@ with st.spinner("Loading AI models..."):
 
 if models:
     st.session_state.models_loaded = True
-    st.success("All models loaded successfully!")
+    if models['cnn_model'] == "fallback":
+        st.warning("⚠️ CNN model not found. Using fallback emotion detection (less accurate).")
+    else:
+        st.success("All models loaded successfully!")
 
 # Layout: Two main columns for content
 col1, col2 = st.columns([1.2, 1])
