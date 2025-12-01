@@ -1,5 +1,4 @@
-from dotenv import load_dotenv
-load_dotenv()  # loads .env into os.environ
+  # loads .env into os.environ
 import os
 HF_TOKEN = os.getenv("HF_TOKEN", "")
 HF_REPO_ID = 'abhinav965108/distilgpt2_model'
@@ -633,7 +632,7 @@ if st.session_state.narration_generated:
     if st.session_state.audio_path and st.session_state.audio_path.exists():
         with open(st.session_state.audio_path, "rb") as audio_file:
             audio_bytes = audio_file.read()
-        st.audio(audio_bytes, format="audio/mp3")
+        st.audio(audio_bytes, format="audio/mp3",autoplay=True)
     else:
         # Fallback waveform animation
         bars_html = "".join([f'<div class="bar" style="height: {30 + (i%5)*10}%; animation-delay: -{i*0.1}s"></div>' for i in range(40)])
