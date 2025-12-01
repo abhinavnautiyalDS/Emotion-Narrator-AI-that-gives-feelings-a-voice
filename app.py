@@ -3,7 +3,7 @@ import os
 HF_TOKEN = os.getenv("HF_TOKEN", "")
 HF_REPO_ID = 'abhinav965108/distilgpt2_model'
 HF_SUBFOLDER = 'cpu-sft-distil/cpu-sft-distil'
-KERAS_MODEL_PATH = r"C:\Users\abhis\Downloads\Emotion narrator project\emotional_narrator_CNN_part1.keras"
+KERAS_MODEL_PATH = "emotional_narrator_CNN_part1.keras"
 import streamlit as st
 from PIL import Image
 import base64
