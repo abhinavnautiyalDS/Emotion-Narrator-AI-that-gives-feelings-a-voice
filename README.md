@@ -119,6 +119,10 @@ Each module has a single responsibility, making the system modular and scalable.
 
 
 
+https://github.com/user-attachments/assets/2a006b2b-6581-4fd3-b407-93fe3145e610
+
+
+
 
 ## Key Learnings
 
@@ -132,7 +136,7 @@ Each module has a single responsibility, making the system modular and scalable.
 
 - Responsible AI requires uncertainty handling
 
-##Future Improvements
+## Future Improvements
 
 - Multilingual narration
 
@@ -143,4 +147,21 @@ Each module has a single responsibility, making the system modular and scalable.
 - Video-based emotion analysis
 
 - Temporal emotion tracking
+
+## 📖 Detailed Explanation (Medium Blog)
+
+For a complete in-depth explanation of the project — including:
+
+- CNN design and EfficientNet architecture
+- Dataset challenges and how they were solved
+- LLM fine-tuning strategy
+- Prompt engineering and narration logic
+- Multimodal pipeline design
+- Deployment approach
+
+👉 Read the full technical walkthrough on Medium:  
+**Emotion Narrator — Building a Multimodal AI System that Sees, Understands, and Speaks Human Emotion**
+
+🔗 *Medium link:*  
+https://medium.com/@abhinavnautiyal96/emotion-narrator-building-a-multimodal-ai-system-that-sees-understands-and-speaks-human-emotion-9914b410da35?postPublishedType=initial
 
