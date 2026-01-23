@@ -1,5 +1,8 @@
 # 🧠 Emotion Narrator  
 **A Multimodal AI System that Sees, Understands, and Speaks Human Emotion**
+<img width="1145" height="687" alt="emotion" src="https://github.com/user-attachments/assets/6c4ca626-22ed-448a-85b5-20b79b4adeaf" />
+
+
 
 Emotion Narrator is a multimodal artificial intelligence system designed to go beyond traditional facial emotion recognition.  
 Instead of stopping at emotion labels, the system interprets emotional signals and expresses them through natural language narration and voice output.
@@ -104,59 +107,40 @@ Each module has a single responsibility, making the system modular and scalable.
 
 ---
 
-## 📁 Project Structure
-
-Emotion-Narrator/
-│
-├── README.md
-│
-├── app/
-│   ├── streamlit_app.py          # Main application pipeline
-│   ├── utils/
-│   │   ├── cnn_utils.py          # CNN preprocessing & prediction
-│   │   ├── llm_utils.py          # Prompt building & generation
-│   │   ├── tts_utils.py          # Text-to-speech logic
-│   │   └── image_utils.py        # Face detection & preprocessing
-│
-├── models/
-│   ├── cnn/
-│   │   └── emotional_narrator_CNN.keras
-│   │
-│   ├── llm/
-│   │   └── distilgpt2_finetuned/
-│   │
-│   └── tts/
-│       └── (optional config)
-│
-├── training/
-│   ├── cnn_training.ipynb        # CNN training notebook
-│   ├── llm_finetuning.ipynb      # LLM fine-tuning notebook
-│   └── train_cpu_sft_masked.py   # SFT training script
-│
-├── data/
-│   ├── tdef_dataset/
-│   │   ├── train/
-│   │   │   ├── angry/
-│   │   │   ├── happy/
-│   │   │   ├── sad/
-│   │   │   └── ...
-│   │   └── test/
-│   │       ├── angry/
-│   │       ├── happy/
-│   │       ├── sad/
-│   │       └── ...
-│   │
-│   └── llm_training_data/
-│       └── emotion_narration.jsonl
-│
-├── assets/
-│   ├── pipeline_diagram.png
-│   ├── app_screenshot.png
-│   └── dataset_samples.png
-│
-├── requirements.txt
-│
-└── .env
+## Deployment
 
 
+- Fine-tuned LLM hosted on Hugging Face Hub
+
+- Streamlit used for real-time inference
+
+- Modular architecture enables easy upgrades
+
+
+
+
+
+## Key Learnings
+
+- Data quality matters more than model complexity
+
+- Transfer learning is essential for small datasets
+
+- Emotion detection ≠ emotion understanding
+
+- Multimodal systems outperform single-model approaches
+
+- Responsible AI requires uncertainty handling
+
+##Future Improvements
+
+- Multilingual narration
+
+- Emotion intensity scaling
+
+- Advanced neural TTS
+
+- Video-based emotion analysis
+
+- Temporal emotion tracking
 
