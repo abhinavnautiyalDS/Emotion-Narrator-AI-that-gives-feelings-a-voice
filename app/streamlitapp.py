@@ -6,8 +6,15 @@ HF_SUBFOLDER = 'cpu-sft-distil/cpu-sft-distil'
 
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-KERAS_MODEL_PATH = BASE_DIR / "models" / "emotional_narrator_CNN_part1.keras"
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
+KERAS_MODEL_PATH = BASE_DIR.parent / "models" / "emotional_narrator_CNN_part1.keras"
+
+
+
+st.write("Model path:", KERAS_MODEL_PATH)
+st.write("Exists:", KERAS_MODEL_PATH.exists())
 import streamlit as st
 from PIL import Image
 import base64
