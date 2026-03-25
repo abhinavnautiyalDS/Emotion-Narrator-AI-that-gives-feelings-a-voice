@@ -119,7 +119,6 @@ Each module has a single responsibility, making the system modular and scalable.
 
 https://github.com/user-attachments/assets/c00135dc-3867-4203-991f-75d696ee639c
 
-App link : https://emotion-narrator-ai-that-gives-feelings-a-voice-9ayxlgsrrnd4ge.streamlit.app/
 
 
 
