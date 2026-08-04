@@ -7,4 +7,4 @@ tensorflow-cpu
 torch
 transformers
 huggingface-hub
-gTTS
+gTTS 
